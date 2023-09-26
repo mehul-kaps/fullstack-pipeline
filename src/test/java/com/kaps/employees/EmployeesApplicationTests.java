@@ -21,6 +21,7 @@ public class EmployeesApplicationTests {
 	@Test
 	public void contextLoads() {
 		Assertions.assertThat(employeeController).isNotNull();
+	    System.out.println("HEDO Working Directory = " + System.getProperty("user.dir"));
 		System.out.println("==============================================================");
 		System.out.println("HEDO Employee Application Test: EmployeeController is not NULL");
 		System.out.println("==============================================================");
