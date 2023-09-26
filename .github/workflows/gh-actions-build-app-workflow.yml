@@ -31,6 +31,6 @@ jobs:
       run: mvn -B package --file pom.xml
     - uses: themichaelhall/check-code-coverage@v2
       with:
-        report: site/jacoco/coverage.xml
+        report: /home/runner/work/fullstack-pipeline/fullstack-pipeline/target/site/jacoco/coverage.xml
         required-percentage: 80
 
