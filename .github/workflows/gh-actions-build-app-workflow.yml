@@ -28,7 +28,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean install -B package --file pom.xml
+      run: mvn clean test install
     - uses: themichaelhall/check-code-coverage@v2
       with:
         report: /home/runner/work/fullstack-pipeline/fullstack-pipeline/target/site/jacoco/coverage.xml
