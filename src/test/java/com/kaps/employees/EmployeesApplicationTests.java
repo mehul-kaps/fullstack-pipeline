@@ -24,7 +24,7 @@ public class EmployeesApplicationTests {
 	public void contextLoads() {
 		Assertions.assertThat(employeeController).isNotNull();
 	    System.out.println("HEDO Working Directory = " + System.getProperty("user.dir"));
-	    File dir = new File("/home/runner/work/fullstack-pipeline/fullstack-pipeline/");
+	    File dir = new File("/home/runner/work/fullstack-pipeline/fullstack-pipeline/target/site/jacoco");
 	    String contents[] = dir.list();
 	      System.out.println("HEDO List of files and directories in the specified directory:");
 	      for(int i=0; i<contents.length; i++) {
