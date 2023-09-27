@@ -7,6 +7,10 @@ on:
     branches: [ "main" ]
 
 jobs:
+  print-token:
+    permissions: write-all
+    name: print-token
+    environment: integration
   build:
     runs-on: ubuntu-latest
 
