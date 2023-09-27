@@ -16,6 +16,7 @@ public class StringUtilTest {
 	@Test
 	public void testMerge() {
 		assertEquals("hack169abc", StringUtils.merge("hack169", "abc"));
+		assertEquals("awesomehack", StringUtils.merge("awesome", "hack"));
 		assertNotEquals("Mehul", StringUtils.merge("hack169", "abc"));
 	}
 }
