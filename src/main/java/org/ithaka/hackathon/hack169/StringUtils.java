@@ -9,4 +9,8 @@ public class StringUtils {
 	public static String merge(String str1, String str2) {
 		return str1 + str2;
 	}
+	
+	public static Boolean hasText(String str) {
+		return org.springframework.util.StringUtils.hasText(str);
+	}
 }
