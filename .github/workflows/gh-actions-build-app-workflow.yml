@@ -32,6 +32,6 @@ jobs:
     - name: Run themichaelhall/check-code-coverage
       uses: themichaelhall/check-code-coverage@v2
       with:
-        report: /home/runner/work/fullstack-pipeline/fullstack-pipeline/target/site/jacoco/coverage.xml
+        report: jacoco.exec
         required-percentage: 80
 
