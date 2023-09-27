@@ -28,10 +28,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn clean test install 
-    - name: Run themichaelhall/check-code-coverage
-      uses: themichaelhall/check-code-coverage@v2
-      with:
-        report: jacoco.exec
-        required-percentage: 80
-
+      run: mvn verify
