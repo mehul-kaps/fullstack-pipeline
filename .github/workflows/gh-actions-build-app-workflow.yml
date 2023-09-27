@@ -43,8 +43,8 @@ jobs:
         GH_COVERAGE: ${{ steps.jacoco.outputs.coverage }}
         GH_BRANCH_COVERAGE: ${{ steps.jacoco.outputs.branches }}
       run: |
-         echo "HEDO-1 $(($GH_COVERAGE*100))"
-         echo "HEDO-2 $(($GH_BRANCH_COVERAGE*100))"
+         echo "HEDO-1 $($GH_COVERAGE*100)"
+         echo "HEDO-2 $($GH_BRANCH_COVERAGE*100)"
          echo "COVERAGE=$(echo ($GH_COVERAGE*100))" >> $GITHUB_ENV
          echo "BRANCH_COVERAGE=$(echo ($GH_BRANCH_COVERAGE*100))" >> $GITHUB_ENV
       
