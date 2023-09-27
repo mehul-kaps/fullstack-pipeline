@@ -50,9 +50,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary
-                     * __Coverage:__ 20.000%
-                     * __Branches:__ 100.000%'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ 20.000% <br>\n * __Branches:__ 100.000%'
             })
             
     - name: checking out branch 'dev-1'
