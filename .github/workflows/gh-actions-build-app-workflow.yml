@@ -45,8 +45,8 @@ jobs:
         NUM: ${{ steps.jacoco.outputs.branches }}
       run: |
           echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM * 200))" >> $GITHUB_ENV
-          echo "COVERAGE=$(($GH_COVERAGE * 100))" >> $GITHUB_ENV
-          echo "BRANCH_COVERAGE=$(($GH_BRANCH_COVERAGE * 100))" >> $GITHUB_ENV
+          echo "COVERAGE=$(echo $GH_COVERAGE*100 | bc)" >> $GITHUB_ENV
+          echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100 | bc)" >> $GITHUB_ENV
 #         echo "HEDO-1 $($GH_COVERAGE*100)"
 #         echo "HEDO-2 $($GH_BRANCH_COVERAGE*100)"
 #         echo "COVERAGE=$(echo ($GH_COVERAGE*100))" >> $GITHUB_ENV
@@ -62,8 +62,8 @@ jobs:
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
-        echo "HEDO [$COVERAGE]"
-        echo "HEDO [$BRANCH_COVERAGE]"
+        echo "HEDO-1 [$COVERAGE]"
+        echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
 
@@ -74,7 +74,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '====>   $COVERAGE <br>\n $BRANCH_COVERAGE'
+              body: '====>   $COVERAGE <br>\n ====>   $BRANCH_COVERAGE'
             })
             
     - uses: actions/github-script@v6
@@ -84,7 +84,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ steps.jacoco.outputs.coverage }}*100 <br>\n * __Branches:__ ${{ steps.jacoco.outputs.branches }}*100'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ $COVERAGE <br>\n * __Branches:__ $BRANCH_COVERAGE'
             })
             
     - name: checking out branch 'dev-1'
