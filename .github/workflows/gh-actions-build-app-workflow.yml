@@ -74,7 +74,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '====>   $COVERAGE <br>\n ====>   $BRANCH_COVERAGE'
+              body: '====>  ${{ env.COVERAGE }} <br>\n ====>   ${{ env.BRANCH_COVERAGE }}'
             })
             
     - uses: actions/github-script@v6
@@ -84,7 +84,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ $COVERAGE <br>\n * __Branches:__ $BRANCH_COVERAGE'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE }} <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE }}'
             })
             
     - name: checking out branch 'dev-1'
