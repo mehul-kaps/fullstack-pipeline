@@ -66,16 +66,6 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
-
-    - uses: actions/github-script@v6
-      with:
-        script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '====>  ${{ env.COVERAGE }} <br>\n ====>   ${{ env.BRANCH_COVERAGE }}'
-            })
             
     - uses: actions/github-script@v6
       with:
