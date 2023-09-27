@@ -1,4 +1,4 @@
-package com.kaps.employees;
+package org.ithaka.hackathon.hack169;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,25 +6,18 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.kaps.employees.controllers.EmployeeController;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class EmployeesApplicationTests {
-
-	@Autowired
-	EmployeeController employeeController;
+public class Hack169ApplicationTests {
 
 	@Test
 	public void contextLoads() {
-		Assertions.assertThat(employeeController).isNotNull();
 	    System.out.println("HEDO Working Directory = " + System.getProperty("user.dir"));
 
 	    List<String> listOfFilesList = new ArrayList<>();
