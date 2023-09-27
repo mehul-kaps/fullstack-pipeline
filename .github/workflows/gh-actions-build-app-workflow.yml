@@ -38,11 +38,38 @@ jobs:
         generate-branches-badge: true
         jacoco-csv-file: target/site/jacoco/jacoco.csv
 
+    - name: setting environments variables
+      env:
+        GH_COVERAGE: ${{ steps.jacoco.outputs.coverage }}
+        GH_BRANCH_COVERAGE: ${{ steps.jacoco.outputs.branches }}
+        NUM: ${{ steps.jacoco.outputs.branches }}
+      run: |
+          echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM * 200))" >> $GITHUB_ENV
+          echo "COVERAGE=$(echo $GH_COVERAGE*100 | bc)" >> $GITHUB_ENV
+          echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100 | bc)" >> $GITHUB_ENV
+#         echo "HEDO-1 $($GH_COVERAGE*100)"
+#         echo "HEDO-2 $($GH_BRANCH_COVERAGE*100)"
+#         echo "COVERAGE=$(echo ($GH_COVERAGE*100))" >> $GITHUB_ENV
+#         echo "BRANCH_COVERAGE=$(echo ($GH_BRANCH_COVERAGE*100))" >> $GITHUB_ENV
+      
+    - name: 'Perform Operation with ID ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}'
+      run: |
+           echo "Success! ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}"
+           echo "Success! ${{ env.COVERAGE }}"
+           echo "Success! ${{ env.BRANCH_COVERAGE }}"
+           if [[ $(echo "$COVERAGE <= 80.00" | bc -l) -eq 1 ]]; then
+              echo "Coverage $COVERAGE is less than 80%, We must fail here."
+           fi           
+        
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
-
+        echo "HEDO-1 [$COVERAGE]"
+        echo "HEDO-1 [$BRANCH_COVERAGE]"
+        echo "HEDO-2 ${{ env.COVERAGE }}"
+        echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
+            
     - uses: actions/github-script@v6
       with:
         script: |
@@ -50,7 +77,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ 20.000% <br>\n * __Branches:__ 100.000%'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE }} <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE }}'
             })
             
     - name: checking out branch 'dev-1'

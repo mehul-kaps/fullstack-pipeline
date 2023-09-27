@@ -12,4 +12,10 @@ public class StringUtilTest {
 		assertEquals(7, StringUtils.len("hack169"));
 		assertNotEquals(1384, StringUtils.len("hack169"));
 	}
+	
+	@Test
+	public void testMerge() {
+		assertEquals("hack169abc", StringUtils.merge("hack169", "abc"));
+		assertNotEquals("Mehul", StringUtils.merge("hack169", "abc"));
+	}
 }
