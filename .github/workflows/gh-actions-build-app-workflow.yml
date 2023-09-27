@@ -44,14 +44,16 @@ jobs:
         GH_BRANCH_COVERAGE: ${{ steps.jacoco.outputs.branches }}
       run: |
          echo "COVERAGE=$(echo $GH_COVERAGE*100)" >> $GITHUB_ENV
-         
+         echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100)" >> $GITHUB_ENV
       
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
-        echo "$COVERAGE"
-        echo "$BRANCH_COVERAGE"
+        echo "HEDO [$COVERAGE]"
+        echo "HEDO [$BRANCH_COVERAGE]"
+        echo "HEDO-2 ${{ env.COVERAGE }}"
+        echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
 
     - uses: actions/github-script@v6
       with:
