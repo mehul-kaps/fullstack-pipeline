@@ -42,12 +42,18 @@ jobs:
       env:
         GH_COVERAGE: ${{ steps.jacoco.outputs.coverage }}
         GH_BRANCH_COVERAGE: ${{ steps.jacoco.outputs.branches }}
+        NUM: ${{ steps.jacoco.outputs.branches }}
       run: |
-         echo "HEDO-1 $($GH_COVERAGE*100)"
-         echo "HEDO-2 $($GH_BRANCH_COVERAGE*100)"
-         echo "COVERAGE=$(echo ($GH_COVERAGE*100))" >> $GITHUB_ENV
-         echo "BRANCH_COVERAGE=$(echo ($GH_BRANCH_COVERAGE*100))" >> $GITHUB_ENV
+          echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM + 200))" >> $GITHUB_ENV
       
+#         echo "HEDO-1 $($GH_COVERAGE*100)"
+#         echo "HEDO-2 $($GH_BRANCH_COVERAGE*100)"
+#         echo "COVERAGE=$(echo ($GH_COVERAGE*100))" >> $GITHUB_ENV
+#         echo "BRANCH_COVERAGE=$(echo ($GH_BRANCH_COVERAGE*100))" >> $GITHUB_ENV
+      
+    - name: 'Perform Operation with ID ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}'
+      run: echo "Success! ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}"
+        
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
