@@ -1,6 +1,8 @@
 package com.kaps.employees;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -24,12 +26,12 @@ public class EmployeesApplicationTests {
 	public void contextLoads() {
 		Assertions.assertThat(employeeController).isNotNull();
 	    System.out.println("HEDO Working Directory = " + System.getProperty("user.dir"));
-	    File dir = new File("/home/runner/work/fullstack-pipeline/fullstack-pipeline/target/");
-	    String contents[] = dir.list();
-	      System.out.println("HEDO List of files and directories in the specified directory:");
-	      for(int i=0; i<contents.length; i++) {
-	         System.out.println("HEDO: [" + contents[i] + "]");
-	      }
+
+	    List<String> listOfFilesList = new ArrayList<>();
+	    listf(System.getProperty("user.dir"), listOfFilesList);
+	    for(String filePath : listOfFilesList) {
+	    	System.out.println("HEDO [" + filePath.toString() + "]");
+	    }
 		System.out.println("==============================================================");
 		System.out.println("HEDO Employee Application Test: EmployeeController is not NULL");
 		System.out.println("==============================================================");
@@ -41,5 +43,21 @@ public class EmployeesApplicationTests {
 		System.out.println("HEDO Employee Application Test: postConstructInit called.");
 		System.out.println("=========================================================");
 
+	}
+	
+	
+	public void listf(String directoryName, List<String> files) {
+	    File directory = new File(directoryName);
+
+	    // Get all files from a directory.
+	    File[] fList = directory.listFiles();
+	    if(fList != null)
+	        for (File file : fList) {      
+	            if (file.isFile()) {
+	                files.add(file.getAbsolutePath());
+	            } else if (file.isDirectory()) {
+	                listf(file.getAbsolutePath(), files);
+	            }
+	        }
 	}
 }
