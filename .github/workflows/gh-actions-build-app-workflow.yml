@@ -38,12 +38,17 @@ jobs:
         generate-branches-badge: true
         jacoco-csv-file: target/site/jacoco/jacoco.csv
 
+    - env:
+      GH_COVERAGE: ${{ steps.jacoco.outputs.coverage }}
+      GH_BRANCH_COVERAGE: ${{ steps.jacoco.outputs.branches }}
+      run: |
+         echo ::set-env name=COVERAGE::$((GH_COVERAGE*100))
+         echo ::set-env name=BRANCH_COVERAGE::$((GH_BRANCH_COVERAGE*100))
+      
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-        echo "coverage = ${{ steps.jacoco.outputs.coverage }}*100"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
-        echo "branch coverage = ${{ steps.jacoco.outputs.branches }}*100"
 
     - uses: actions/github-script@v6
       with:
@@ -52,7 +57,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '${{ steps.jacoco.outputs.coverage }} <br>\n ${{ steps.jacoco.outputs.branches }} ${{ steps.jacoco.outputs.coverage }}*100 <br>\n ${{ steps.jacoco.outputs.branches }}*100'
+              body: '====>   $COVERAGE <br>\n $BRANCH_COVERAGE'
             })
             
     - uses: actions/github-script@v6
