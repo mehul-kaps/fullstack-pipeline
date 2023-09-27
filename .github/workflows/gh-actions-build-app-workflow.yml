@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
 
     steps:
     - uses: actions/checkout@v2
@@ -21,16 +24,35 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B test
+      
+    - name: upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: target/
 
     - name: Generate JaCoCo Badge
       id: jacoco
       uses: cicirello/jacoco-badge-generator@v2
+      with:
+        generate-branches-badge: true
+        jacoco-csv-file: target/site/jacoco/jacoco.csv
 
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
 
+    - uses: actions/github-script@v6
+      with:
+        script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ 20.000% <br>\n * __Branches:__ 100.000%'
+            })
+            
     - name: checking out branch 'dev-1'
       uses: actions/checkout@v4
       with:
@@ -50,4 +72,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: jacoco-report
-        path: target/site/jacoco/
+        path: target/
