@@ -57,6 +57,9 @@ jobs:
            echo "Success! ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}"
            echo "Success! ${{ env.COVERAGE }}"
            echo "Success! ${{ env.BRANCH_COVERAGE }}"
+           if [ $(echo "$COVERAGE <= 80.00" | bc -l) -eq 1 ]
+              echo "Coverage $COVERAGE is less than 80%, We must fail here."
+           fi           
         
     - name: Log coverage percentage
       run: |
