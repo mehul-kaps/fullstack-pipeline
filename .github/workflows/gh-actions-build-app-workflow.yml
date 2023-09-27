@@ -38,11 +38,10 @@ jobs:
         generate-branches-badge: true
         jacoco-csv-file: target/site/jacoco/jacoco.csv
 
-    - env:
+    - name: setting environments variables
+      env:
         GH_COVERAGE: ${{ steps.jacoco.outputs.coverage }}
         GH_BRANCH_COVERAGE: ${{ steps.jacoco.outputs.branches }}
-        
-    - name: multiple numbers 
       run: |
          echo ::set-env name=COVERAGE::$(($GH_COVERAGE*100))
          echo ::set-env name=BRANCH_COVERAGE::$(($GH_BRANCH_COVERAGE*100))
@@ -51,6 +50,8 @@ jobs:
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
         echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"
+        echo "$COVERAGE"
+        echo "$BRANCH_COVERAGE"
 
     - uses: actions/github-script@v6
       with:
