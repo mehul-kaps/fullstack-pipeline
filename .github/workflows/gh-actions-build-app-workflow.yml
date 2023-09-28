@@ -47,7 +47,8 @@ jobs:
           echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM * 200))" >> $GITHUB_ENV
           echo "COVERAGE=$(echo $GH_COVERAGE*100 | bc)" >> $GITHUB_ENV
           echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100 | bc)" >> $GITHUB_ENV
-          echo "$COVERAGE | awk '{printf("%d\n",$1 + 0.5)}'"
+          
+          echo "TEMP=$(echo $GH_COVERAGE*100 | awk '{printf("%d\n",$1 + 0.5)}')" >> $GITHUB_ENV
       
     - name: Log coverage percentage
       run: |
@@ -57,6 +58,7 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
+        echo "HEDO-3 ${{ env.TEMP }}"
            
     - name: Comment coverage statistics on Pull Requet(PR)        
       uses: actions/github-script@v6
