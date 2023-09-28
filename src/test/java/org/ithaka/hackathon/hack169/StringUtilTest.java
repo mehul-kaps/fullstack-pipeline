@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class StringUtilTest {
 
+	
 	@Test
 	public void testLen() {
 		assertEquals(7, StringUtils.len("hack169"));
@@ -16,6 +17,12 @@ public class StringUtilTest {
 	@Test
 	public void testMerge() {
 		assertEquals("hack169abc", StringUtils.merge("hack169", "abc"));
+		assertEquals("awesomehack", StringUtils.merge("awesome", "hack"));
 		assertNotEquals("Mehul", StringUtils.merge("hack169", "abc"));
+	}
+	
+	@Test
+	public void testHasText() {
+		assertEquals(Boolean.TRUE, StringUtils.hasText("hack169") );
 	}
 }
