@@ -48,7 +48,7 @@ jobs:
           echo "COVERAGE=$(echo $GH_COVERAGE*100 | bc)" >> $GITHUB_ENV
           echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100 | bc)" >> $GITHUB_ENV
           
-          echo "TEMP=$(echo $GH_COVERAGE*100 | awk '{printf("%d\n",$1 + 0.5)}')" >> $GITHUB_ENV
+          echo "TEMP=$(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')" >> $GITHUB_ENV
       
     - name: Log coverage percentage
       run: |
