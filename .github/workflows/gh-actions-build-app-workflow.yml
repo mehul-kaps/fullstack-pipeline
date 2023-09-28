@@ -67,7 +67,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary :) <br>\n * __Coverage:__ ${{ env.COVERAGE_ROUNDED }} % <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE_ROUNDED }} %'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE_ROUNDED }} % <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE_ROUNDED }} %'
             })
             
     - name: 'Check Coverate Minimum Thresold, FAIL the workflow if below Thresold'
