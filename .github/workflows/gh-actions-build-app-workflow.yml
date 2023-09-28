@@ -112,7 +112,7 @@ jobs:
             github_comment="${github_comment}|${array[1]}.${array[2]} | $COVERAGE_PCT% |\n"
             done < './target/site/jacoco/jacoco.csv'
             
-            echo -e "GITHUB_COMMENT_FINAL=$github_comment" >> $GITHUB_ENV
+            echo "GITHUB_COMMENT_FINAL=$github_comment" >> $GITHUB_ENV
             
     - name: 'GitHub HTML Markup Comment - FINAL'
       run: |
