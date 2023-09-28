@@ -47,7 +47,40 @@ jobs:
           echo "GITHUB_RUN_NUMBER_WITH_OFFSET=$(($NUM * 200))" >> $GITHUB_ENV
           echo "COVERAGE=$(echo $GH_COVERAGE*100 | bc)" >> $GITHUB_ENV
           echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100 | bc)" >> $GITHUB_ENV
-      
+          
+                     echo "Try reading file."
+           echo "${PWD}"
+           echo "$(cat ./target/site/jacoco/jacoco.csv)"
+           
+           github_comment="| FullyQualified Class Name  | Coverage Percentage |\n| ------------- | ------------- |\n"
+
+  
+           while read -r line
+           do
+            echo "========================================================"
+            printf "%s\n" "$line"
+            IFS=', ' read -r -a array <<< "$line"
+            echo "HEYYYYYYYY ${array[0]}"
+            if [ "${array[0]}" = "GROUP" ]; then
+                 continue;
+            fi 
+
+            echo "${array[1]}.${array[2]}"
+            echo "${array[3]}"
+            echo "${array[4]}"
+            missed=${array[3]}
+            covered=${array[4]}
+            covered_plus_missed=$( echo $missed+$covered  | bc )
+            echo "covered_plus_missed:" $covered_plus_missed
+            res=$( echo "scale=2; $covered / $covered_plus_missed"  | bc )
+            COVERAGE_PCT=$( echo $res*100  | bc )
+            echo $COVERAGE_PCT%
+            github_comment="${github_comment}|${array[1]}.${array[2]} | $COVERAGE_PCT % |\n"
+            done < './target/site/jacoco/jacoco.csv'
+            
+            echo "GITHUB_COMMENT_FINAL=$github_comment" >> $GITHUB_ENV
+
+          
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
@@ -56,6 +89,8 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
+        echo "COVERAGE_ROUNDED=$(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV 
+        echo "BRANCH_COVERAGE_ROUNDED=$(echo $BRANCH_COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV
            
     - name: Comment coverage statistics on Pull Requet(PR)        
       uses: actions/github-script@v6
@@ -65,7 +100,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE }} <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE }}'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE_ROUNDED }} % <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE_ROUNDED }}% \n\n  ${{ env.GITHUB_COMMENT_FINAL }}'
             })
             
     - name: 'Check Coverate Minimum Thresold, FAIL the workflow if below Thresold'
@@ -73,8 +108,11 @@ jobs:
            echo "Success! ${{ env.GITHUB_RUN_NUMBER_WITH_OFFSET }}"
            echo "Success! ${{ env.COVERAGE }}"
            echo "Success! ${{ env.BRANCH_COVERAGE }}"
-           if [[ $(echo "$COVERAGE <= 60.00" | bc -l) -eq 1 ]]; then
+           if [[ $(echo "$COVERAGE <= 80.00" | bc -l) -eq 1 ]]; then
               echo "Coverage $COVERAGE is less than 80%, We must fail here."
               exit 1
            fi  
-
+            
+    - name: 'GitHub HTML Markup Comment - FINAL'
+      run: |
+          echo -e $GITHUB_COMMENT_FINAL
