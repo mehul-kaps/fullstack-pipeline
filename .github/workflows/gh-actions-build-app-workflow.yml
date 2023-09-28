@@ -48,8 +48,6 @@ jobs:
           echo "COVERAGE=$(echo $GH_COVERAGE*100 | bc)" >> $GITHUB_ENV
           echo "BRANCH_COVERAGE=$(echo $GH_BRANCH_COVERAGE*100 | bc)" >> $GITHUB_ENV
           
-          echo "TEMP=$(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')" >> $GITHUB_ENV
-      
     - name: Log coverage percentage
       run: |
         echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
@@ -58,7 +56,7 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
-        echo "HEDO-3 ${{ env.TEMP }}"
+        echo "HEDO-3 $(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  
            
     - name: Comment coverage statistics on Pull Requet(PR)        
       uses: actions/github-script@v6
