@@ -29,5 +29,6 @@ public class StringUtilTest {
 	@Test
 	public void testDummy() {
 		System.out.println("HACK-169");
+		System.out.println("Happy Hacking");
 	}
 }
