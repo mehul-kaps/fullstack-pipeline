@@ -85,5 +85,35 @@ jobs:
            echo "Try reading file."
            echo "${PWD}"
            echo "$(cat ./target/site/jacoco/jacoco.csv)"
-           echo "Done reading file"
+           
+           github_comment="| FullyQualified Class Name  | Coverage Percentage |\n| ------------- | ------------- |\n"
 
+  
+           while read -r line
+           do
+            echo "========================================================"
+            printf "%s\n" "$line"
+            IFS=', ' read -r -a array <<< "$line"
+            echo "HEYYYYYYYY ${array[0]}"
+            if [ "${array[0]}" = "GROUP" ]; then
+                 continue;
+            fi 
+
+            echo "${array[1]}.${array[2]}"
+            echo "${array[3]}"
+            echo "${array[4]}"
+            missed=${array[3]}
+            covered=${array[4]}
+            covered_plus_missed=$( echo $missed+$covered  | bc )
+            echo "covered_plus_missed:" $covered_plus_missed
+            res=$( echo "scale=2; $covered / $covered_plus_missed"  | bc )
+            COVERAGE_PCT=$( echo $res*100  | bc )
+            echo $COVERAGE_PCT%
+            github_comment="${github_comment}|${array[1]}.${array[2]} | $COVERAGE_PCT% |\n"
+            done < './target/site/jacoco/jacoco.csv'
+            
+            echo "GITHUB_COMMENT_FINAL=$github_comment" >> $GITHUB_ENV
+            
+    - name: 'Check Coverate Minimum Thresold, FAIL the workflow if below Thresold'
+      run: |
+          echo $GITHUB_COMMENT_FINAL
