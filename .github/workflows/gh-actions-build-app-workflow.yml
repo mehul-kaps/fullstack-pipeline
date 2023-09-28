@@ -56,7 +56,7 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
-        echo "HEDO-3 $(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  
+        echo "TEMP=$(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV 
            
     - name: Comment coverage statistics on Pull Requet(PR)        
       uses: actions/github-script@v6
@@ -66,7 +66,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE }} <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE }}'
+              body: '## JaCoCo Test Coverage Summary <br>\n * __Coverage:__ ${{ env.COVERAGE }} <br>\n * __Branches:__ ${{ env.BRANCH_COVERAGE }} <br>\n * __CoverageRounded:__ ${{ env.TEMP }}'
             })
             
     - name: 'Check Coverate Minimum Thresold, FAIL the workflow if below Thresold'
