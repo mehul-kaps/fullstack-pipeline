@@ -7,6 +7,9 @@ public class Bank {
 	}
 	
 	public void withdraw(Integer ac, Double amount) {
-		System.out.println("Withdrawn [" + amount + "] from account [" + ac + "]");
+		if(amount < 50)
+			System.out.println("Cannot without less than $50");
+		else
+			System.out.println("Withdrawn [" + amount + "] from account [" + ac + "]");
 	}
 }
