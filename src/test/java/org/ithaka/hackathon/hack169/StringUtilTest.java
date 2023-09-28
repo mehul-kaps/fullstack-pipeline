@@ -30,5 +30,6 @@ public class StringUtilTest {
 	public void testDummy() {
 		System.out.println("HACK-169");
 		System.out.println("Happy Hacking");
+		System.out.println("Happy Hacking 2");
 	}
 }
