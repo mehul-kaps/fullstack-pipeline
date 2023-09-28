@@ -1,6 +1,7 @@
 package org.ithaka.hackathon.hack169;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class BankTest {
 
@@ -11,11 +12,13 @@ public class BankTest {
 		bank = new Bank();
 	}
 	
+	@Test
 	public void depositTest() {
 		bank.deposit(123, 44.5);
 		
 	}
 	
+	@Test
 	public void withdraw() {
 		bank.deposit(776, 963.5);
 	}
