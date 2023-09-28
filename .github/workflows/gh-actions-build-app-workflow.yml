@@ -79,4 +79,11 @@ jobs:
               echo "Coverage $COVERAGE is less than 80%, We must fail here."
               exit 1
            fi  
+           
+    - name: 'Read JACOCO File - Ignore Me'
+      run: |
+           echo "Try reading file."
+           echo "${PWD}"
+           echo "$(cat ./target/site/jacoco/jacoco.csv)"
+           echo "Done reading file"
 
