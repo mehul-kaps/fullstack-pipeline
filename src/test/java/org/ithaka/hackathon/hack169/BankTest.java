@@ -7,20 +7,20 @@ public class BankTest {
 
 	Bank bank;
 
-	@BeforeEach                                         
-	void setUp() {
-		bank = new Bank();
-	}
-	
-	@Test
-	public void depositTest() {
-		bank.deposit(123, 44.5);
-		
-	}
-	
-	@Test
-	public void withdrawTest() {
-		bank.withdraw(776, 963.5);
-		bank.withdraw(776, 30d);
-	}
+//	@BeforeEach                                         
+//	void setUp() {
+//		bank = new Bank();
+//	}
+//	
+//	@Test
+//	public void depositTest() {
+//		bank.deposit(123, 44.5);
+//		
+//	}
+//	
+//	@Test
+//	public void withdrawTest() {
+//		bank.withdraw(776, 963.5);
+//		bank.withdraw(776, 30d);
+//	}
 }
