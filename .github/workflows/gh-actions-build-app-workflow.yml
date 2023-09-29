@@ -116,3 +116,13 @@ jobs:
     - name: 'GitHub HTML Markup Comment - FINAL'
       run: |
           echo -e $GITHUB_COMMENT_FINAL
+          
+    - name: Comment PR with coverage report
+      uses: machine-learning-apps/pr-comment@v1
+      with:
+        message: |
+          ## Code Coverage Report
+          \`\`\`
+          $(cat target/site/jacoco/jacoco.csv)
+          \`\`\`
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
