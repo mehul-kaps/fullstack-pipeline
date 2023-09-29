@@ -23,5 +23,4 @@ public class BankTest {
 		bank.withdraw(776, 963.5);
 		bank.withdraw(776, 30d);
 	}
-
 }
