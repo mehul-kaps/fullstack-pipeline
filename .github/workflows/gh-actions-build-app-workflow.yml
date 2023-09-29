@@ -116,13 +116,17 @@ jobs:
     - name: 'GitHub HTML Markup Comment - FINAL'
       run: |
           echo -e $GITHUB_COMMENT_FINAL
-          
-    - name: Comment PR with coverage report
-      uses: machine-learning-apps/pr-comment@master
+      
+      
+    - name: [FINAL]Comment coverage statistics on Pull Requet(PR)        
+      uses: actions/github-script@v6
       with:
-        message: |
-          ## Code Coverage Report
-          \`\`\`
-          $(cat target/site/jacoco/jacoco.csv)
-          \`\`\`
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '## Code Coverage Report \
+                      \`\`\` \
+                      $(cat ./target/site/jacoco/jacoco.csv) \
+                      \`\`\`' })
