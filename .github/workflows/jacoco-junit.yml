@@ -29,8 +29,23 @@ jobs:
           name: jacoco-reports
           path: target/site/jacoco
 
-      - name: Comment Jacoco JUnit Report
-        uses: actions/github-script@v7
+      - name: Read File Content
+        id: read-file
+        run: echo "::set-output name=file_content::$(cat target/site/jacoco/index.html)" 
+
+      - name: Comment on PR
+        uses: actions/github-script@v5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: .github/scripts/comment-jacoco-junit.js
+          script: |
+            const fileContent = process.env.INPUT_FILE_CONTENT;
+            const prNumber = context.payload.pull_request.number;
+
+            const octokit = github.getOctokit(github.token);
+            await octokit.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: `File Content:\n\`\`\`\n${fileContent}\n\`\`\``,
+            );
+          env:
+            INPUT_FILE_CONTENT: ${{ steps.read-file.outputs.file_content }}
