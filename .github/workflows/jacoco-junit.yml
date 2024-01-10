@@ -1,0 +1,36 @@
+name: Jacoco JUnit Coverage
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  jacoco-junit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '11'
+
+      - name: Build and Test
+        run: mvn clean test jacoco:report
+
+      - name: Publish Jacoco Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jacoco-reports
+          path: target/site/jacoco
+
+      - name: Comment Jacoco JUnit Report
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: .github/scripts/comment-jacoco-junit.js
