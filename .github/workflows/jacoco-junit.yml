@@ -41,12 +41,17 @@ jobs:
           script: |
             const fileContent = process.env.INPUT_FILE_CONTENT;
             const prNumber = context.payload.pull_request.number;
+            const output = `
+                           \`\`\`\n
+                           ${process.env.INPUT_FILE_CONTENT}
+                           \`\`\`
+                           `;
 
             const octokit = github.getOctokit(github.token);
             await octokit.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: prNumber,
-              body: `File Content:\n\`\`\`\n${fileContent}\n\`\`\``,
-            );
+              body: output
+            });
             
