@@ -42,11 +42,15 @@ jobs:
            INPUT_FILE_CONTENT: ${{ steps.read-file.outputs.file_content }}
         with:
           script: |
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '## Code Coverage Report \
-                        \`\`\` \
-                        ${process.env.INPUT_FILE_CONTENT} \
-                        \`\`\`' })
+            const output = `
+            \`\`\`\n
+            ${process.env.INPUT_FILE_CONTENT}
+            \`\`\`
+            `;
+            
+            github.rest.issues.createComment({
+               issue_number: context.issue.number,
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               body: output 
+            })
