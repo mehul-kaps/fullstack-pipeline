@@ -34,24 +34,16 @@ jobs:
         run: echo "::set-output name=file_content::$(cat target/site/jacoco/index.html)" 
 
       - name: Comment on PR
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         env:
            INPUT_FILE_CONTENT: ${{ steps.read-file.outputs.file_content }}
         with:
           script: |
-            const fileContent = process.env.INPUT_FILE_CONTENT;
-            const prNumber = context.payload.pull_request.number;
-            const output = `
-                           \`\`\`\n
-                           ${process.env.INPUT_FILE_CONTENT}
-                           \`\`\`
-                           `;
-
-            const octokit = github.getOctokit(github.token);
-            await octokit.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: prNumber,
-              body: output
-            });
-            
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: '## Code Coverage Report \
+                        \`\`\` \
+                        ${process.env.INPUT_FILE_CONTENT} \
+                        \`\`\`' })
