@@ -43,7 +43,7 @@ jobs:
         with:
           script: |
             const output = `
-            \`\`\`\n
+            \`\`\`html \n
             ${process.env.INPUT_FILE_CONTENT}
             \`\`\`
             `;

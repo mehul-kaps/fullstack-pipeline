@@ -25,10 +25,10 @@ jobs:
     - name: Build with Maven
       run: mvn -B test
       
-    - name: upload artifacts
+    - name: Upload Jacoco Report artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: my-artifact
+        name: jacoco-report-artifacts
         path: target/
 
     - name: Generate JaCoCo Badge
