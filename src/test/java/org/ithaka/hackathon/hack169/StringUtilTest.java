@@ -27,6 +27,11 @@ public class StringUtilTest {
 	}
 	
 	@Test
+	public void testHasText_new() {
+		assertEquals(Boolean.TRUE, StringUtils.hasText_new("hack169") );
+	}
+	
+	@Test
 	public void testDummy() {
 		System.out.println("HACK-169");
 		System.out.println("Happy Hacking");
