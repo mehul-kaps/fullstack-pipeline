@@ -35,4 +35,10 @@ public class StringUtilTest {
 		System.out.println("Happy Hacking 35");
 		System.out.println("Happy Hacking 40");
 	}
+	
+	@Test
+	public void testDummy_new() {
+		System.out.println("HACK-169");
+		System.out.println("Happy Hacking 40");
+	}
 }

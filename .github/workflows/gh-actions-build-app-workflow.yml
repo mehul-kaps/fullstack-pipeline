@@ -116,3 +116,13 @@ jobs:
     - name: 'GitHub HTML Markup Comment - FINAL'
       run: |
           echo -e $GITHUB_COMMENT_FINAL
+
+    - name: List Changed Files
+      run: |
+        echo "Event name: ${{ github.event_name }}"
+        
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          # For pull_request events, list the changed files
+          echo "Changed files:"
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+        fi
