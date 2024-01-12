@@ -124,5 +124,6 @@ jobs:
         if [ "${{ github.event_name }}" == "pull_request" ]; then
           # For pull_request events, list the changed files
           echo "Changed files:"
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }}
+          OUTPUT=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo "My Changed files: $OUTPUT"
         fi

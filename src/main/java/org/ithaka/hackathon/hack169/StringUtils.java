@@ -13,4 +13,8 @@ public class StringUtils {
 	public static Boolean hasText(String str) {
 		return org.springframework.util.StringUtils.hasText(str);
 	}
+	
+	public static Boolean hasText_new(String str) {
+		return org.springframework.util.StringUtils.hasText(str);
+	}
 }
