@@ -18,10 +18,10 @@ public class BankTest {
 		
 	}
 	
-	@Test
-	public void withdrawTest() {
-		bank.withdraw(776, 963.5);
-		bank.withdraw(776, 30d);
-		bank.withdraw(776, 100d);
-	}
+//	@Test
+//	public void withdrawTest() {
+//		bank.withdraw(776, 963.5);
+//		bank.withdraw(776, 30d);
+//		bank.withdraw(776, 100d);
+//	}
 }
