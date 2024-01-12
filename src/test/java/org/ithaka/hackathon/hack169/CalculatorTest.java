@@ -32,7 +32,7 @@ class CalculatorTest {
     @Test                                               
     @DisplayName("Simple multiplication should work")   
     void testAdd() {
-        assertEquals(20, calculator.add(4, 5),     
+        assertEquals(9, calculator.add(4, 5),     
                 "Regular add should work");  
     }
 }

@@ -1,5 +1,10 @@
 package org.ithaka.hackathon.hack169;
 
+/**
+ * 
+ * @author mehulkapadia
+ *
+ */
 public class StringUtils {
 
 	public static Integer len(String in) {
@@ -17,6 +22,4 @@ public class StringUtils {
 	public static Boolean hasText_new(String str) {
 		return org.springframework.util.StringUtils.hasText(str);
 	}
-	
-	
 }
