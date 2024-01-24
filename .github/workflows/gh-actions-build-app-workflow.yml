@@ -125,7 +125,15 @@ jobs:
         #if [ "${{ github.event_name }}" == "pull_request" ]; then
           # For pull_request events, list the changed files
           echo "Changed files:"
-          OUTPUT=$(git diff master..HEAD --name-only)
+          OUTPUT=$(git diff master..$GITHUB_REF --name-only)
           echo "Below are the changed files.\n"
           echo $OUTPUT
         fi
+        
+    - name: List Changed Files NEW
+      run: |
+        echo "Changed Files: START"
+        git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
+        git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
+        CHANGED_FILES=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)
+        echo "Changed Files: $CHANGED_FILES"
