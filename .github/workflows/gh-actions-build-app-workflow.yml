@@ -89,6 +89,7 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
+        
         echo "COVERAGE_ROUNDED=$(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV 
         echo "BRANCH_COVERAGE_ROUNDED=$(echo $BRANCH_COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV
            
@@ -121,9 +122,10 @@ jobs:
       run: |
         echo "Event name: ${{ github.event_name }}"
         
-        if [ "${{ github.event_name }}" == "pull_request" ]; then
+        #if [ "${{ github.event_name }}" == "pull_request" ]; then
           # For pull_request events, list the changed files
           echo "Changed files:"
-          OUTPUT=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-          echo "My Changed files: $OUTPUT"
+          OUTPUT=$(git diff master..HEAD --name-only)
+          echo "Below are the changed files.\n"
+          echo $OUTPUT
         fi
