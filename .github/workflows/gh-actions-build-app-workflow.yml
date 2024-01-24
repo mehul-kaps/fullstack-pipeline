@@ -124,11 +124,12 @@ jobs:
         
         #if [ "${{ github.event_name }}" == "pull_request" ]; then
           # For pull_request events, list the changed files
-          echo "Changed files:"
+          echo "Changed files: for"
+          echo $GITHUB_REF
           OUTPUT=$(git diff master..$GITHUB_REF --name-only)
           echo "Below are the changed files.\n"
           echo $OUTPUT
-        fi
+        #fi
         
     - name: List Changed Files NEW
       run: |
