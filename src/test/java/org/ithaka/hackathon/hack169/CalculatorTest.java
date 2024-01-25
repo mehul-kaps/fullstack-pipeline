@@ -28,4 +28,11 @@ class CalculatorTest {
         assertEquals(0, calculator.multiply(0, 5), "Multiple with zero should be zero");
         assertEquals(0, calculator.multiply(5, 0), "Multiple with zero should be zero");
     }
+    
+    @Test                                               
+    @DisplayName("Simple multiplication should work")   
+    void testAdd() {
+        assertEquals(9, calculator.add(4, 5),     
+                "Regular add should work");  
+    }
 }

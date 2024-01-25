@@ -25,10 +25,10 @@ jobs:
     - name: Build with Maven
       run: mvn -B test
       
-    - name: upload artifacts
+    - name: Upload Jacoco Report artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: my-artifact
+        name: jacoco-report-artifacts
         path: target/
 
     - name: Generate JaCoCo Badge
@@ -89,6 +89,7 @@ jobs:
         echo "HEDO-1 [$BRANCH_COVERAGE]"
         echo "HEDO-2 ${{ env.COVERAGE }}"
         echo "HEDO-2 ${{ env.BRANCH_COVERAGE }}"
+        
         echo "COVERAGE_ROUNDED=$(echo $COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV 
         echo "BRANCH_COVERAGE_ROUNDED=$(echo $BRANCH_COVERAGE | awk '{printf("%d\n",$1 + 0.5)}')"  >> $GITHUB_ENV
            
@@ -116,3 +117,24 @@ jobs:
     - name: 'GitHub HTML Markup Comment - FINAL'
       run: |
           echo -e $GITHUB_COMMENT_FINAL
+
+    - name: List Changed Files
+      run: |
+        echo "Event name: ${{ github.event_name }}"
+        
+        #if [ "${{ github.event_name }}" == "pull_request" ]; then
+          # For pull_request events, list the changed files
+          #echo "Changed files: for"
+          #echo $GITHUB_REF
+          #OUTPUT=$(git diff master..$GITHUB_REF --name-only)
+          echo "Below are the changed files.\n"
+          #echo $OUTPUT
+        #fi
+        
+    - name: List Changed Files NEW
+      run: |
+        echo "Changed Files: START"
+        git fetch origin $GITHUB_BASE_REF:$GITHUB_BASE_REF
+        git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
+        CHANGED_FILES=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)
+        echo "Changed Files: $CHANGED_FILES"
