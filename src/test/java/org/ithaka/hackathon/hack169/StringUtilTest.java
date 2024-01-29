@@ -31,18 +31,18 @@ public class StringUtilTest {
 		assertEquals(Boolean.TRUE, StringUtils.hasText_new("hack169") );
 	}
 	
-	@Test
-	public void testDummy() {
-		System.out.println("HACK-169");
-		System.out.println("Happy Hacking");
-		System.out.println("Happy Hacking 2");
-		System.out.println("Happy Hacking 30");
-		System.out.println("Happy Hacking 35");
-		System.out.println("Happy Hacking 40");
-	}
-	
-	@Test
-	public void testDummy_new() {
-		System.out.println("HACK-169");
-	}
+//	@Test
+//	public void testDummy() {
+//		System.out.println("HACK-169");
+//		System.out.println("Happy Hacking");
+//		System.out.println("Happy Hacking 2");
+//		System.out.println("Happy Hacking 30");
+//		System.out.println("Happy Hacking 35");
+//		System.out.println("Happy Hacking 40");
+//	}
+//	
+//	@Test
+//	public void testDummy_new() {
+//		System.out.println("HACK-169");
+//	}
 }
