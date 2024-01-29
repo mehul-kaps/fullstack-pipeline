@@ -5,7 +5,7 @@ public class Calculator {
         return a * b;
     }
     
-//    public Integer add(Integer a, Integer b) {
-//        return a + b;
-//    }
+    public Integer add(Integer a, Integer b) {
+        return a + b;
+    }
 }
