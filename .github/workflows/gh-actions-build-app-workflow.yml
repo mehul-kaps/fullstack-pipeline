@@ -140,7 +140,31 @@ jobs:
         echo "Changed Files: $CHANGED_FILES"
         
     - name: Run Trivy vulnerability scanner in fs mode
+      id: trivy-scan
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
         scan-ref: '.'
+        
+    - name: Extract Trivy scan results
+      id: extract-results
+      run: echo "::set-output name=trivy-scan-results::$(echo ${{ steps.trivy-scan.outputs.trivy-scan-result }} | jq -c)"
+   
+    - name: Comment on PR with Trivy scan results
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const results = JSON.parse('${{ steps.extract-results.outputs.trivy-scan-results }}');
+          const comment = `
+          Trivy Scan Results:
+          \`\`\`
+          ${JSON.stringify(results, null, 2)}
+          \`\`\`
+          `;
+          github.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.payload.pull_request.number,
+            body: comment
+          });
