@@ -140,6 +140,7 @@ jobs:
         echo "Changed Files: $CHANGED_FILES"
         
     - name: Run Trivy vulnerability scanner in fs mode
+      id: trivy-scan
       uses: aquasecurity/trivy-action@master
       with:
         scan-type: 'fs'
