@@ -148,14 +148,14 @@ jobs:
         
     - name: Extract Trivy scan results
       id: extract-results
-      run: echo "::set-output name=trivy-scan-results::$(echo ${{ steps.trivy-scan.outputs.trivy-scan-result }} | jq -c)"
+      run: echo "TRIVY_SCAN_RESULT=$(echo ${{ steps.trivy-scan.outputs.* }})"  >> $GITHUB_ENV      
    
     - name: Comment on PR with Trivy scan results
       uses: actions/github-script@v5
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const results = JSON.parse('${{ steps.extract-results.outputs.trivy-scan-results }}');
+          const results = JSON.parse('${{ env.TRIVY_SCAN_RESULT }}');
           const comment = `
           Trivy Scan Results:
           \`\`\`
