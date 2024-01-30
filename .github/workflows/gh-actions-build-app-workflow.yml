@@ -138,3 +138,9 @@ jobs:
         git fetch origin $GITHUB_HEAD_REF:$GITHUB_HEAD_REF
         CHANGED_FILES=$(git diff --name-only $GITHUB_BASE_REF $GITHUB_HEAD_REF)
         echo "Changed Files: $CHANGED_FILES"
+        
+    - name: Run Trivy vulnerability scanner in fs mode
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
