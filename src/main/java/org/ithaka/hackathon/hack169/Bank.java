@@ -12,4 +12,8 @@ public class Bank {
 		else
 			System.out.println("Withdrawn [" + amount + "] from account [" + ac + "]");
 	}
+	
+	public void close() {
+		System.out.println("Close the account.");
+	}
 }
